@@ -12,9 +12,6 @@ input_csv_file <- args[1]
 output_rdata_file <- args[2]
 
 
-input_csv_file = "./public_repo/data/processed/round2/team_submissions_incl_agg_round2.csv" 
-output_rdata_file = "./public_repo/data/processed/round2/mmods1_round_2_results_clean.Rdata"
-
 ######################
 # Load data
 # --------------------
@@ -45,6 +42,13 @@ obj.labs.incletters = c("A: Cumulative infections",
                         "E: Days closed" )
 names(obj.labs.incletters)= c("cumu_infections","cumu_deaths","peak_hosp","prob_outbreak","days_closed")
 
+obj.labs.numeral = c("(i) Cumulative infections",
+                     "(ii) Cumulative deaths",
+                     "(iii) Peak hospitalizations",
+                     "(iv) Probability of outbreak",
+                     "(v) Days closed")
+names(obj.labs.numeral)= c("cumu_infections","cumu_deaths","peak_hosp","prob_outbreak","days_closed")
+
 obj.order <- c("cumu_infections", "cumu_deaths", "peak_hosp", "prob_outbreak", "days_closed")
 
 # Capitalise "aggregate"
@@ -69,5 +73,7 @@ df_plot$objective <- factor(df_plot$objective, levels = obj.order, ordered = TRU
 # Save as Rdata type
 # -------------------
 
-save(list = c("df_plot", "int.labs", "obj.labs", "obj.labs.incletters","obj.order", "id.order"), 
+save(list = c("df_plot", "int.labs", 
+              "obj.labs", "obj.labs.incletters", "obj.labs.numeral",
+              "obj.order", "id.order"), 
     file = output_rdata_file)

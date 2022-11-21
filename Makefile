@@ -80,6 +80,15 @@ compare_agg:
 # Visualization
 # -------------
 
+# Figure 1: aggregate and individual model results for
+#           each objective and intervention pair
+fig1: 
+	Rscript src/viz/figure_1.R \
+		$(mmods_viz_tools) \
+		"data/processed/round2/mmods1_round_2_results_clean.Rdata" \
+		"data/processed/round2/team_submissions_incl_agg_round2_allquantiles.csv" \
+		"$(fig_dir)"
+
 # Figure 2: Individual model results for 
 # each objective and intervention scenario pair
 # WIP
