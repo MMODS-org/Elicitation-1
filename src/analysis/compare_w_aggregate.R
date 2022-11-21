@@ -20,8 +20,8 @@ output_rdata_file <- args[3]
 ######################
 # Preamble
 # --------------------
-library('tidyr')
-library('dplyr')
+library(tidyr)
+library(dplyr)
 
 
 #####################
@@ -101,47 +101,3 @@ df_IQRs <- df_IQRs %>%
   mutate(modelIQR=NULL,aggIQR=NULL)
 
 save(list = c("df_IQRs"), file = output_rdata_file)
-
-
-# # # labels for plots
-# # obj.labs = c("Cumulative infections", "Cumulative deaths", "Peak hospitalizations", "Probability of outbreak", "Days closed")
-# # names(obj.labs) = unique(df_plot$variable)
-# # int.labs= c("closed","5-percent", "2-weeks", "open")
-# # names(int.labs) = unique(df_plot$intervention)
-# 
-# #facet_grid(rows=vars(intervention), cols=vars(variable),scales="free_x", labeller = labeller(variable = obj.labs, intervention = int.labs), switch ="y")+
-#   
-# #### UPDATED BY EH 8/13/2020 ###
-# df_IQRs$intervention.rev = factor(df_IQRs$intervention, levels = rev(levels(df_IQRs$intervention)))
-# # labels for plots
-# obj.labs = c("Cumulative infections", "Cumulative deaths", "Peak hospitalizations", "Probability of outbreak", "Days closed")
-# names(obj.labs) = unique(df_IQRs$objective)
-# x_limits = c(min(df_IQRs$ratio.IQR), max(df_IQRs$ratio.IQR))
-# x_limits = ifelse(x_limits ==0, 0.5, x_limits)
-# 
-# r1 <- ggplot(df_IQRs %>% filter(round==1)  %>% group_by(intervention,objective,round),aes(x=ratio.IQR,y=intervention.rev))+
-#   geom_vline(xintercept=1,linetype="dashed",color="orange",size = 1.5)+
-#   geom_point(alpha=.2,size=3)+
-#   facet_wrap(vars(objective), labeller = labeller(objective = obj.labs))+
-#   labs(y = "Round 1")+
-#   scale_x_log10()+
-#   scale_y_discrete(labels = c("open", "2-weeks", "1-percent", "closed"))+
-#   expand_limits(x = x_limits[2])+
-#   theme_bw()+
-#   theme(axis.title.x = element_blank())
-# r2 <- ggplot(df_IQRs %>% filter(round==2)  %>% group_by(intervention,objective,round),aes(x=ratio.IQR,y=intervention.rev))+
-#   geom_vline(xintercept=1,linetype="dashed",color="orange",size = 1.5)+
-#   geom_point(alpha=.2,size=3)+
-#   facet_wrap(vars(objective), labeller = labeller(objective = obj.labs))+
-#   labs(x = "IQR Relative to Aggregate", y = "Round 2")+
-#   scale_x_log10()+
-#   scale_y_discrete(labels = c("open", "2-weeks", "5-percent", "closed"))+
-#   expand_limits(x = x_limits[2])+
-#   theme_bw()+
-#   theme(strip.background.x = element_blank(),
-#         strip.text.x = element_blank())
-# p = arrangeGrob(grobs = list(r1, r2), nrow=2)
-# #ggsave("./figures/objectives_data_round_comparison/compre_w_aggregate.png",p, width = 6,  height = 4, units = "in", dpi = 300)
-
-
-
