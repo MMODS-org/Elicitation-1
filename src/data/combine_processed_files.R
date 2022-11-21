@@ -39,4 +39,5 @@ dat_all_long <- melt(as.data.frame(dat_all),
     id.vars = c("round", "quantile", "intervention", "team"))
 names(dat_all_long) <- c("round", "quantile", "intervention", "id", "objective", "value")
 
-write_csv(dat_all_long, path = output_csv_file)
+write_csv(dat_all_long, file = output_csv_file)
+

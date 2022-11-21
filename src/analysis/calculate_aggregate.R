@@ -37,7 +37,7 @@ out_agg <- calculate_aggregate(dat,unique(dat$id), unique(dat$objective), unique
 # --------------------
 dat_all_agg = rbind(dat, out_agg)
 
-write_csv(dat_all_agg, path = output_csv_file)
+write_csv(dat_all_agg, file = output_csv_file)
 
 
 

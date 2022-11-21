@@ -51,4 +51,4 @@ df_plot <- df_plot %>%
 df_plot <- df_plot %>%
     arrange(id, objective, intervention)
 
-write_csv(df_plot, path = output_csv_file)
+write_csv(df_plot, file = output_csv_file)
