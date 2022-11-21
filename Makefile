@@ -98,11 +98,11 @@ fig1:
 		"data/processed/round2/submissions/mmods1_round_2_results_clean.Rdata" \
 		"$(fig_dir)/fig2_scenario_interval_full_colorbyrank.png"
 
-fig_multipanel:
+fig4_panels:
 	Rscript src/viz/multipanel_figure.R \
 		$(mmods_viz_tools) \
-		"data/processed/round2/submissions/mmods1_round_2_results_clean.Rdata" \
-		$(fig_dir)
+		"data/processed/round2/mmods1_round_2_results_clean.Rdata" \
+		"output/figures/Figure4_panels"
 
 figs_county:
 	Rscript src/viz/plotting_targets_county.R \
