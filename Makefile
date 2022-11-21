@@ -104,6 +104,20 @@ fig4_panels:
 		"data/processed/round2/mmods1_round_2_results_clean.Rdata" \
 		"output/figures/Figure4_panels"
 
+## supplemental figures
+
+# projection results
+# Figure S2 - S15
+sfigs_proj:
+	Rscript src/viz/plotting_targets_round2_abridged.R \
+		$(mmods_viz_tools) \
+		"data/processed/round2/mmods1_round_2_results_clean.Rdata" \
+		"data/processed/round2/team_submissions_incl_agg_round2_allquantiles.csv" \
+		"data/processed/round1/team_submissions_incl_agg_round1_allquantiles.csv" \
+		"data/processed/compare_rounds.Rdata" \
+		"data/processed/compare_aggregate.Rdata" \
+		"output/figures/supplemental_figures"
+
 figs_county:
 	Rscript src/viz/plotting_targets_county.R \
 		$(mmods_viz_tools) \
