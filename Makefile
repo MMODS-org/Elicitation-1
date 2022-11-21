@@ -89,14 +89,12 @@ fig1:
 		"data/processed/round2/team_submissions_incl_agg_round2_allquantiles.csv" \
 		"$(fig_dir)"
 
-# Figure 2: Individual model results for 
-# each objective and intervention scenario pair
-# WIP
-# fig2:
-#	Rscript src/viz/plotting_targets_round2_abridged.R \
-#		$(mmods_viz_tools) \
-		"data/processed/round2/submissions/mmods1_round_2_results_clean.Rdata" \
-		"$(fig_dir)/fig2_scenario_interval_full_colorbyrank.png"
+# Figure 2: days closed R1 vs. R2
+fig2:
+	Rscript src/viz/figure_2.R \
+		$(mmods_viz_tools) \
+		"data/processed/compare_rounds.Rdata" \
+		$(fig_dir)
 
 fig4_panels:
 	Rscript src/viz/multipanel_figure.R \
