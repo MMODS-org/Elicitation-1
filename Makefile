@@ -19,8 +19,7 @@ combine_teamdata_round2:
 		"data/processed/round2/submissions" \
 		"data/processed/round2/team_submissions_only_round2.csv"
 
-#requirements: add_ranks_round2
-data_round2:
+data_round2: add_ranks_round2
 	Rscript src/data/create_rdata_object.R \
 		"data/processed/round2/team_submissions_incl_agg_round2.csv" \
 		"data/processed/round2/mmods1_round_2_results_clean.Rdata"
@@ -67,16 +66,15 @@ add_ranks_round2: add_aggregate_round2
 		
 compare_rounds: 
 	Rscript src/analysis/round_comparison.R \
-    "data/processed/round1/team_submissions_incl_agg_round1.csv"\
+    	"data/processed/round1/team_submissions_incl_agg_round1.csv"\
 		"data/processed/round2/team_submissions_incl_agg_round2.csv"\
-		"data/processed/compare/compare_rounds.Rdata" 
+		"data/processed/compare_rounds.Rdata" 
 
 compare_agg: 
 	Rscript src/analysis/compare_w_aggregate.R \
-    "data/processed/round1/team_submissions_incl_agg_round1.csv"\
+    	"data/processed/round1/team_submissions_incl_agg_round1.csv"\
 		"data/processed/round2/team_submissions_incl_agg_round2.csv"\
-		"data/processed/compare/compare_aggregate.Rdata" 
-
+		"data/processed/compare_aggregate.Rdata" 
 
 ###############
 # Visualization
