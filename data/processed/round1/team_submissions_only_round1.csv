@@ -21271,7 +21271,7 @@ round,quantile,intervention,id,objective,value
 1,54,closed,H,prob_outbreak,0.004053586
 1,55,closed,H,prob_outbreak,0.004811568
 1,56,closed,H,prob_outbreak,0.005690734
-1,57,closed,H,prob_outbreak,0.0067063619999999996
+1,57,closed,H,prob_outbreak,0.00670636199999999
 1,58,closed,H,prob_outbreak,0.007874922
 1,59,closed,H,prob_outbreak,0.009214046
 1,60,closed,H,prob_outbreak,0.010742478
@@ -21433,7 +21433,7 @@ round,quantile,intervention,id,objective,value
 1,16,1percent,H,prob_outbreak,0.657427096
 1,17,1percent,H,prob_outbreak,0.718661903
 1,18,1percent,H,prob_outbreak,0.756147144
-1,19,1percent,H,prob_outbreak,0.80812069499999994
+1,19,1percent,H,prob_outbreak,0.80812069500000006
 1,20,1percent,H,prob_outbreak,0.838430034
 1,21,1percent,H,prob_outbreak,0.878670174
 1,22,1percent,H,prob_outbreak,0.900981374
