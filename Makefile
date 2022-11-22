@@ -97,6 +97,15 @@ fig2:
 		"data/processed/compare_rounds.Rdata" \
 		$(fig_dir)
 
+# Figure 3: comparison with county data
+fig3: 
+	Rscript src/viz/figure_3.R \
+		$(mmods_viz_tools) \
+		"data/processed/county/processed/county_deaths_cdf_closed_strict.csv" \
+		"data/processed/county/processed/county_deaths_cdf_closed_partial.csv" \
+		"data/processed/round2/team_submissions_incl_agg_round2_allquantiles.csv" \
+		$(fig_dir)
+
 fig4_panels:
 	Rscript src/viz/multipanel_figure.R \
 		$(mmods_viz_tools) \
