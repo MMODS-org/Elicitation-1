@@ -28,7 +28,8 @@ prepare_county_data:
 	Rscript src/data/prepare_county_data.R \
 		"data/processed/county/county_attributes.xlsx" \
 		"data/processed/county/time_series_covid19_deaths_US.csv" \
-		"data/processed/county"
+		"data/processed/county/time_series_covid19_confirmed_US.csv" \
+		"data/processed/county/processed"
 		
 ################
 # Analysis
@@ -116,13 +117,17 @@ sfigs_proj:
 		"data/processed/compare_aggregate.Rdata" \
 		"output/figures/supplemental_figures"
 
+# county data comparison results
+# Figure S16 - 17
 figs_county:
 	Rscript src/viz/plotting_targets_county.R \
 		$(mmods_viz_tools) \
-		"data/processed/county/county_deaths_cdf_closed_strict.csv" \
-		"data/processed/county/county_deaths_cdf_closed_partial.csv" \
+		"data/processed/county/processed/county_deaths_cdf_closed_strict.csv" \
+		"data/processed/county/processed/county_deaths_cdf_closed_partial.csv" \
+		"data/processed/county/processed/county_cases_cdf_closed_strict.csv" \
+		"data/processed/county/processed/county_cases_cdf_closed_partial.csv" \
 		"data/processed/round2/team_submissions_incl_agg_round2_allquantiles.csv" \
-		$(fig_dir)
+		"output/figures/supplemental_figures"
 		
 figs_checklist:
 	Rscript src/viz/plotting_targets_county.R \
