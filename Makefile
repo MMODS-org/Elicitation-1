@@ -110,6 +110,7 @@ fig4_panels:
 	Rscript src/viz/multipanel_figure.R \
 		$(mmods_viz_tools) \
 		"data/processed/round2/mmods1_round_2_results_clean.Rdata" \
+		"data/processed/compare_rounds.Rdata" \
 		"output/figures/Figure4_panels"
 
 ## supplemental figures
