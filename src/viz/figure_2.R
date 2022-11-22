@@ -41,10 +41,11 @@ p = ggplot(data = df_compare %>% filter(intervention %in%  c("closed")) %>% filt
   geom_point(shape = 1,size = 3,colour = "black")+
   scale_color_manual(values = c("black","#A50026"), breaks = c(1,2), labels = c("Round 1", "Round 2"))+
   scale_x_continuous(breaks=c(50,100,150,184,200,228,244),labels=c(50,100,150,"Start of forecast: 184",200,"Stay at home: 228","State of emergency: 244"))+
-  labs(color = "", x = "",y = "")+
+  labs(color = "")+
   theme_bw() + 
   theme(axis.text.y= element_blank(),
         axis.text.x=element_text(angle=30,hjust=1),
+        axis.title = element_blank(),
         strip.background.y = element_blank(),
         strip.placement = "outside",
         panel.grid.major = element_blank(), 
