@@ -138,8 +138,11 @@ figs_county:
 		"data/processed/round2/team_submissions_incl_agg_round2_allquantiles.csv" \
 		"output/figures/supplemental_figures"
 		
+# model metadata
+# Figure S18-20
 figs_checklist:
 	Rscript src/viz/plotting_targets_county.R \
+		$(mmods_viz_tools) \
 		"data/processed/round2/checklist_data.csv" \
 		"data/processed/round2/checklist_parameter_data.csv"
-		$(fig_dir)
+		"output/figures/supplemental_figures"

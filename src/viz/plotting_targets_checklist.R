@@ -12,12 +12,6 @@ input_checklist_data <- args[2]
 input_pars <- args[3]
 output_file <- args[4]
 
-# mmods_viz_tools = "./Elicitation1/public_repo/src/viz/mmods_viz_tools.R"
-# input_checklist_data = "./Elicitation1/public_repo/data/processed/round2/checklist_data.csv"
-# input_pars = "./Elicitation1/public_repo/data/processed/round2/checklist_parameter_data.csv"
-# output_file = "./Elicitation1/public_repo/output/figures"
-
-
 ######################
 # Preamble
 # --------------------
@@ -27,17 +21,17 @@ source(mmods_viz_tools)
 ######################
 # Load data
 # --------------------
-df_form <- read_csv(input_checklist_data) 
-df_pars <- read_csv(input_pars)
+df_form <- read_csv(input_checklist_data, show_col_types = FALSE) 
+df_pars <- read_csv(input_pars, show_col_types = FALSE)
 
 
 ######################
 # Visualization
 # --------------------
 # 
-# #### Figure 3B: start date of intervention for 2week/5pct interventions  ####
+# #### Figure S12B: start date of intervention for 2week/5pct interventions  ####
 # Summarize by grouping variables
-df_plot_dates <- df_pars_dates %>%
+df_plot_dates <- df_pars %>%
   subset((param %in% c("param_dist_dates_2wk_intervention","param_dist_dates_5percent_intervention","param_initial_number_susc_individuals"))) %>% 
   subset(param != "param_initial_number_susc_individuals") %>%
   group_by(letter_id, intervention,param) %>% 
@@ -74,53 +68,49 @@ p <- ggplot(df_plot_dates, aes(x = q50.test, y = id, color = param)) +
   ylab("Model ID") + xlab("Intervention start day (number of days since May 15, 2020)") +
   scale_colour_manual(name = "Intervention", breaks = df_plot_dates$param, values = c("#797979","#000000"), labels=df_plot_dates$intervention) +
   coord_cartesian(xlim = c(0,184)) +
-  theme_bw() + theme(axis.text.y = element_text(size = 11)
-                     ,axis.text.x=element_text(size=11,hjust=0.5)
-                     ,strip.text = element_text(size = 11)) +
+  theme_bw() + theme(axis.text.y = element_text(size = 11),
+                     axis.text.x=element_text(size=11,hjust=0.5),
+                     legend.position = "none",
+                     strip.text = element_text(size = 11)) +
   geom_point(data = df_5p,mapping = aes(x = q50.test, y = as.numeric(id)-o), size=2) +
   geom_errorbarh(data = df_5p, mapping = aes(xmin = q5, xmax = q95, y = as.numeric(id)-o), 
                  size = 0.5, alpha = 0.75, height = 0) +
   geom_errorbarh(data = df_5p, mapping = aes(xmin = q25, xmax = q75, y = as.numeric(id)-o), 
                  size = 1, alpha = 0.75, height = 0) +
-  
   geom_point(data = df_2w,mapping = aes(x = q50.test, y = as.numeric(id)+o),size=2) +
   geom_errorbarh(data = df_2w, mapping = aes(xmin = q5, xmax = q95, y = as.numeric(id)+o), 
                  size = 0.5, alpha = 0.75, height = 0) +
   geom_errorbarh(data = df_2w, mapping = aes(xmin = q25, xmax = q75, y = as.numeric(id)+o), 
                  size = 1, alpha = 0.75, height = 0)
 
-ggsave("Figure3B.png", plot = p, path = output_file, width = 7,  height = 6, units = "in", dpi = 300)
+ggsave("FigureS12B.pdf", plot = p, path = output_file, width = 7,  height = 6, units = "in")
 
-#### Figure S16: model components included by team ####
-components <- df_form %>% select(components_susceptibility:components_testing) 
-component.options <- c("Explicitly included but not structured by age or sex and/or gender","Explicitly included, structured by age","Explicitly included, structured by sex and/or gender", "Not included")
+#### Figure S18: model components included by team ####
+components <- df_form %>% 
+  select(letter_id, components_susceptibility:components_testing) %>%
+  melt("letter_id")
+components$variable = substr(as.character(components$variable), 12, nchar(as.character(components$variable)))
+components$variable = factor(components$variable, 
+                          levels = c("susceptibility","symptoms","disease_severity","time_until_infectious",
+                                     "time_until_symptomatic","reinfection","hospitilization","icu",
+                                     "recovery","death","testing" ))
 
-## Reformat to plot component data)
-component.mat<-matrix(NA, nrow=nrow(components), ncol=ncol(components))
-for(i in 1:nrow(components)){
-  for(j in 1:ncol(components)){
-    if(grepl(component.options[1],components[i,j])){
-      component.mat[i,j]= "Explicitly included"
-    } else if(grepl(component.options[3],components[i,j])){
-      component.mat[i,j]= "Explicitly included, gender/sex structured"
-    } else if(grepl(component.options[2],components[i,j])){
-      component.mat[i,j]= "Explicitly included, age structured"
-    } else(component.mat[i,j]= NA)
-  }
-}
+p <- ggplot(data = components, aes(x = variable, y = letter_id, fill = value)) +
+  geom_tile(color="white") +
+  theme(axis.text = element_text(size=10), 
+        axis.title = element_text(size=14), 
+        axis.text.x = element_text(angle = 45, hjust=1))+
+  ylab("Model ID")+xlab("Model component") + 
+  scale_fill_manual(values=c("#CCCCCC", "#696969","#000000","#FFFFFF"), 
+                    labels = c("Explicitly included", 
+                               "Explicitly included, structured by age", 
+                               "Explicitly included, structured by age AND sex/gender")) + 
+  labs(fill="Response") +
+  scale_x_discrete(expand = c(0,0)) +
+  scale_y_discrete(limits = rev(levels(as.factor(df_form$letter_id))), 
+                   expand = c(0,0))
 
-rownames(component.mat) <- df_form$letter_id 
-colnames(component.mat) <- colnames(components) %>% str_replace("components_","") %>% str_replace("compoments_","") %>% str_replace_all("_"," ")
-melted.component.mat <- melt(component.mat)
-
-p <- ggplot(melted.component.mat, aes(y=as.character(Var1), x=Var2, fill=value)) + 
-  geom_tile(color="white") + 
-  theme(axis.text = element_text(size=10), axis.title = element_text(size=14), axis.text.x = element_text(angle = 45, hjust=1))+ylab("Model ID")+xlab("Model component") + 
-  scale_fill_manual(values=c("#696969","#000000","#FFFFFF")) + 
-  labs(fill="Response") + 
-  scale_y_discrete(limits = rev(levels(as.factor(df_form$letter_id))))
-
-ggsave("FigureS16.png", plot = p, path = output_file, width = 8,  height = 5, units = "in", dpi = 300)
+ggsave("FigureS18.pdf", plot = p, path = output_file, width = 9,  height = 5, units = "in")
 
 
 #### Figure S17: data sources used by team ####
@@ -146,11 +136,12 @@ p <- ggplot(melted.data.mat, aes(y=as.character(Var1), x=Var2, fill=value)) +
   ylab("Model ID")+xlab("Data Sources") + 
   scale_fill_manual(values=c(c("#F0F0F0","#000000"))) + 
   labs(fill="Response") + 
-  scale_y_discrete(limits = rev(levels(as.factor(df_form$letter_id))))
+  scale_x_discrete(expand = c(0,0)) +
+  scale_y_discrete(limits = rev(levels(as.factor(df_form$letter_id))), expand = c(0,0))
 
-ggsave("FigureS17.png", plot = p, path = output_file, width = 7,  height = 5, units = "in", dpi = 300)
+ggsave("FigureS19.pdf", plot = p, path = output_file, width = 7,  height = 5, units = "in", dpi = 300)
 
-#### Figure S18: projected deaths, susceptibles by team ####
+#### Figure S20: projected deaths, susceptibles by team ####
 df_pars_intonly_nodates <- subset(df_pars, !(param %in% c("param_dist_dates_2wk_intervention","param_dist_dates_5percent_intervention","param_initial_number_susc_individuals")))
 
 df_plot_pars <- df_pars_intonly_nodates %>%
@@ -193,7 +184,7 @@ p <- ggplot(data = df_plot_pars %>% group_by("param","intervention"), mapping = 
                      ,axis.text.x=element_text(size=11,angle=90,hjust=1)
                      ,strip.text = element_text(size = 14))
 
-ggsave("FigureS18.png", plot = p, path = output_file, width = 15,  height = 10, units = "in", dpi = 300)
+ggsave("FigureS20.pdf", plot = p, path = output_file, width = 15,  height = 10, units = "in", dpi = 300)
 
 
 ######################
