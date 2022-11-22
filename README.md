@@ -21,7 +21,8 @@ This repository uses both R and Python.
 
 ### Additional commands and notes
 
-* `make fig_multipanel` will generate subpanels for a multi-panel figure.  
+* `make fig4_panels` will generate subpanels for Figure 4, the multi-panel figure.  
+* see `Makefile` for all commands. 
 
 
 ### Output
