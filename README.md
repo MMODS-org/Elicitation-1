@@ -33,4 +33,4 @@ Output figures are saved in `output/figures`.
 
 For additional detail, see:
 
-* Shea, K., Borchering, R.K., Probert, W.J., Howerton, E., Bogich, T.L., Li, S., van Panhuis, W.G., Viboud, C., ... and Runge, M.C. (2020) COVID-19 reopening strategies at the county level in the face of uncertainty: Multiple Models for Outbreak Decision Support. medRxiv. [https://www.medrxiv.org/content/10.1101/2020.11.03.20225409v1.full](https://www.medrxiv.org/content/10.1101/2020.11.03.20225409v1.full)
+* Shea, K., Borchering, R.K., Probert, W.J.M., Howerton, E., Bogich, T.L., Li, S.-L., van Panhuis, W.G., Viboud, C., ... and Runge, M.C. (2023) Multiple models for outbreak decision support in the face of uncertainty. Proc Natl Acad Sci U S A 120, e2207537120. [https://doi.org/10.1073/pnas.2207537120](https://doi.org/10.1073/pnas.2207537120)
